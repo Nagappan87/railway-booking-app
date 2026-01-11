@@ -1,0 +1,10 @@
+# Sensitive UPI and payment files
+upi.py
+verify_*.py
+static/upi_*.png
+static/*_qr.png
+static/*_dynamic_qr.png
+data/bookings.csv
+__pycache__/
+*.pyc
+*.bak
