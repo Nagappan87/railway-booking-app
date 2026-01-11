@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Change Price</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{
+font-family:Poppins;
+background:#f1f1f1;
+padding:30px;
+}
+.card{
+max-width:400px;
+margin:auto;
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+button{
+width:100%;
+padding:10px;
+background:#0d6efd;
+color:white;
+border:none;
+border-radius:8px;
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+<h2>Update Fare Per Station</h2>
+
+<p>Current Price: <b>{{ current_price }}</b></p>
+
+<form method="post" action="/owner-price">
+<input type="number" name="new_price" required style="width:100%;padding:8px;">
+<br><br>
+<button type="submit">Apply New Price</button>
+</form>
+
+</div>
+
+</body>
+</html>

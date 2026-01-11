@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Bus Ticket</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{
+    font-family:Poppins;
+    background:#f4f6fb;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.ticket{
+    width:380px;
+    background:white;
+    padding:25px;
+    border-radius:18px;
+    box-shadow:0 15px 35px rgba(0,0,0,.3);
+}
+
+h2{text-align:center;margin-bottom:10px}
+
+.details p{
+    margin:6px 0;
+}
+
+.qr{
+    text-align:center;
+    margin-top:15px;
+}
+
+.qr img{
+    width:160px;
+    border:1px solid #ccc;
+    padding:6px;
+    border-radius:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="ticket">
+<h2>🚌 Bus Ticket</h2>
+<hr>
+
+<div class="details">
+<p><b>Name:</b> {{ booking.name }}</p>
+<p><b>Seat:</b> {{ booking.seat }}</p>
+<p><b>Route:</b> {{ booking.from }} → {{ booking.to }}</p>
+<p><b>Date:</b> {{ booking.date }}</p>
+<p><b>Fare:</b> ₹ {{ booking.fare }}</p>
+<p><b>UTR:</b> {{ booking.utr }}</p>
+</div>
+
+<hr>
+
+<div class="qr">
+<p><b>Scan for Verification</b></p>
+<img src="/static/{{ qr_image }}" alt="Ticket QR">
+</div>
+
+<p style="text-align:center;margin-top:10px;font-weight:600">
+    Have a safe journey 🙂
+</p>
+</div>
+
+</body>
+</html>

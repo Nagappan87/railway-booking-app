@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Select Seat</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{
+    margin:0;
+    min-height:100vh;
+    font-family:Poppins;
+    background:
+        linear-gradient(180deg, #2c3e50, #4ca1af);
+}
+
+/* PAGE TITLE */
+h2{
+    text-align:center;
+    color:white;
+    margin:15px 0;
+}
+
+/* BUS CONTAINER */
+.bus{
+    width:520px;
+    margin:20px auto;
+    background:
+        linear-gradient(145deg,#f7f9fc,#e3e8ee);
+    border-radius:25px;
+    padding:20px;
+    box-shadow:0 20px 45px rgba(0,0,0,.4);
+    position:relative;
+}
+
+/* TOP CURVE (bus feel) */
+.bus::before{
+    content:"";
+    position:absolute;
+    top:-12px;
+    left:50%;
+    transform:translateX(-50%);
+    width:85%;
+    height:25px;
+    background:#d0d7de;
+    border-radius:0 0 50px 50px;
+}
+
+/* ONE ROW */
+.row{
+    display:flex;
+    justify-content:space-between;
+    margin:10px 0;
+}
+
+/* LEFT & RIGHT */
+.side{
+    display:flex;
+    gap:10px;
+}
+
+/* AISLE */
+.aisle{
+    width:50px;
+}
+
+/* SEAT */
+.seat{
+    width:42px;
+    height:42px;
+    border-radius:10px;
+    border:none;
+    font-weight:600;
+    cursor:pointer;
+    background:#cfd8dc;
+    color:#263238;
+    transition:all .25s ease;
+}
+
+/* HOVER */
+.seat:hover{
+    transform:translateY(-4px) scale(1.08);
+    box-shadow:0 6px 15px rgba(0,0,0,.3);
+}
+
+/* STATES */
+.selected{
+    background:#43a047 !important;
+    color:white;
+    box-shadow:0 0 12px rgba(67,160,71,.8);
+}
+
+.booked{
+    background:#e53935 !important;
+    color:white;
+    cursor:not-allowed;
+    box-shadow:none;
+}
+
+/* CONTROLS */
+.controls{
+    width:520px;
+    margin:auto;
+}
+
+input,button{
+    width:100%;
+    padding:12px;
+    margin-top:12px;
+    border-radius:10px;
+    border:1px solid #ccc;
+    font-size:15px;
+}
+
+button{
+    background:#1976d2;
+    color:white;
+    border:none;
+    font-size:16px;
+    font-weight:600;
+}
+
+/* LEGEND */
+.legend{
+    display:flex;
+    justify-content:space-around;
+    margin-top:15px;
+    color:white;
+    font-size:14px;
+}
+
+.legend span{
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+.box{
+    width:18px;
+    height:18px;
+    border-radius:5px;
+}
+
+.av{background:#cfd8dc}
+.sel{background:#43a047}
+.bk{background:#e53935}
+</style>
+
+<script>
+let selected = [];
+
+function selectSeat(id, max){
+    let seat = document.getElementById(id);
+
+    if(seat.classList.contains("booked")) return;
+
+    max = parseInt(max);
+
+    if(selected.includes(id)){
+        selected = selected.filter(s => s !== id);
+        seat.classList.remove("selected");
+    }else{
+        if(selected.length >= max){
+            alert("Seat limit reached");
+            return;
+        }
+        selected.push(id);
+        seat.classList.add("selected");
+    }
+
+    document.getElementById("seatInput").value = selected.join(",");
+}
+</script>
+</head>
+
+<body>
+
+<h2>🚌 Choose Your Seat</h2>
+
+<form action="/payment" method="POST">
+
+<div class="bus">
+
+{% for i in range(1,61,5) %}
+<div class="row">
+
+    <!-- LEFT 2 -->
+    <div class="side">
+        {% for s in [i, i+1] %}
+        <button type="button"
+            id="S{{s}}"
+            onclick="selectSeat('S{{s}}', document.getElementById('count').value)"
+            class="seat {% if 'S'+s|string in booked %}booked{% endif %}">
+            {{s}}
+        </button>
+        {% endfor %}
+    </div>
+
+    <!-- AISLE -->
+    <div class="aisle"></div>
+
+    <!-- RIGHT 3 -->
+    <div class="side">
+        {% for s in [i+2, i+3, i+4] %}
+        <button type="button"
+            id="S{{s}}"
+            onclick="selectSeat('S{{s}}', document.getElementById('count').value)"
+            class="seat {% if 'S'+s|string in booked %}booked{% endif %}">
+            {{s}}
+        </button>
+        {% endfor %}
+    </div>
+
+</div>
+{% endfor %}
+
+</div>
+
+<div class="controls">
+<input type="number" id="count" name="count" min="1" max="6"
+       placeholder="Number of seats" required>
+
+<input type="hidden" id="seatInput" name="seat">
+<input type="hidden" name="from_place" value="{{from_place}}">
+<input type="hidden" name="to_place" value="{{to_place}}">
+<input type="hidden" name="date" value="{{date}}">
+
+<button>Proceed to Payment</button>
+</div>
+
+<div class="legend">
+    <span><div class="box av"></div>Available</span>
+    <span><div class="box sel"></div>Selected</span>
+    <span><div class="box bk"></div>Booked</span>
+</div>
+
+</form>
+
+</body>
+</html>

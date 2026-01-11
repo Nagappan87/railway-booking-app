@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <link rel="stylesheet" href="/static/style.css">
+
+    <style>
+        body {
+            background: linear-gradient(to right, #e0eafc, #cfdef3);
+            font-family: Arial, sans-serif;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .pay-box {
+            width: 60%;
+            margin: 30px auto;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 14px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .fare {
+            font-size: 22px;
+            color: #2e7d32;
+            margin-top: 10px;
+        }
+
+        .qr-box {
+            margin: 20px 0;
+        }
+
+        .qr-box img {
+            width: 220px;
+            border: 2px solid #2e7d32;
+            padding: 10px;
+            border-radius: 12px;
+        }
+
+        .btn {
+            padding: 12px 22px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .confirm {
+            background: #2e7d32;
+            color: white;
+        }
+
+        .confirm:hover {
+            background: #1b5e20;
+        }
+
+        hr {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>💳 Payment Page</h2>
+
+<div class="pay-box">
+
+    <h3><b>Selected Seat(s):</b> {{ seat }}</h3>
+    <h3><b>From:</b> {{ from_place }}</h3>
+    <h3><b>To:</b> {{ to_place }}</h3>
+    <h3><b>Journey Date:</b> {{ date }}</h3>
+
+    <hr>
+
+    <div class="fare">
+        Pay Amount: ₹ {{ fare }}
+    </div>
+
+    <p><b>Scan the QR below (amount will auto-fill)</b></p>
+
+    <!-- ✅ SINGLE DYNAMIC RATHEESH GPay QR -->
+    <div class="qr-box">
+        <img src="/static/{{ qr }}" alt="Ratheesh GPay QR">
+    </div>
+
+    <p style="color:#555;">
+        Use GPay / PhonePe / Paytm
+    </p>
+
+    <hr>
+
+    <!-- CONFIRM BOOKING -->
+    <form action="/confirm" method="POST">
+
+    <label><b>UPI Reference Number (UTR)</b></label><br>
+    <input type="text"
+           name="utr"
+           placeholder="Enter 12-digit UTR"
+           required
+           pattern="[0-9]{12}"
+           style="padding:10px;width:250px;margin-top:8px;">
+
+    <br><br>
+
+    <label>
+        <input type="checkbox" required>
+        I confirm that payment is completed
+    </label>
+
+    <br><br>
+    <button class="btn confirm">✅ Confirm Booking</button>
+</form>
+
+
+</div>
+
+</body>
+</html>

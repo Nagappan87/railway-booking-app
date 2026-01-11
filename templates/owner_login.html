@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Owner Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/static/style.css">
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #1e3c72, #2a5298);
+    margin: 0;
+    padding: 0;
+}
+
+.owner-container {
+    width: 400px;
+    margin: 80px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.owner-container input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.owner-container button {
+    width: 100%;
+    padding: 12px;
+    background: #2a5298;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.owner-container button:hover {
+    background: #1e3c72;
+}
+
+.footer {
+    text-align: center;
+    color: white;
+    margin-top: 15px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="owner-container">
+<h2>🔐 Owner Sign In</h2>
+
+<form action="/owner-login" method="POST">
+
+<label><b>Username:</b></label>
+<input type="text" name="username" placeholder="Enter Owner Username" required>
+
+<label><b>Password:</b></label>
+<input type="password" name="password" placeholder="Enter Owner Password" required>
+
+<button type="submit">Login to Dashboard</button>
+
+</form>
+
+</div>
+
+<div class="footer">
+<p>Bus Reservation Owner Portal</p>
+</div>
+
+</body>
+</html>

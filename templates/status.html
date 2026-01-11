@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Booking Status</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{
+    font-family:Poppins;
+    background:linear-gradient(120deg,#667eea,#764ba2);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.card{
+    width:420px;
+    background:white;
+    padding:25px;
+    border-radius:18px;
+    box-shadow:0 20px 40px rgba(0,0,0,.3);
+}
+
+h2{text-align:center;margin-bottom:15px}
+
+input,button{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border-radius:10px;
+    border:1px solid #ccc;
+}
+
+button{
+    background:#1976d2;
+    color:white;
+    border:none;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.status{
+    margin-top:15px;
+    padding:12px;
+    border-radius:10px;
+    text-align:center;
+    font-weight:600;
+}
+
+.pending{background:#fff3cd;color:#856404}
+.paid{background:#d4edda;color:#155724}
+.rejected{background:#f8d7da;color:#721c24}
+
+.ticket{
+    margin-top:15px;
+    text-align:center;
+}
+
+.ticket a{
+    display:inline-block;
+    margin-top:10px;
+    padding:12px 18px;
+    background:#2e7d32;
+    color:white;
+    border-radius:10px;
+    text-decoration:none;
+    font-weight:600;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+<h2>🎫 Booking Status</h2>
+
+<form method="post">
+    <input name="mobile" placeholder="Mobile Number" required>
+    <input name="utr" placeholder="UPI Reference Number" required>
+    <button>Check Status</button>
+</form>
+
+{% if booking %}
+    <div class="status
+        {% if booking.status=='PAID' %}paid
+        {% elif booking.status=='REJECTED' %}rejected
+        {% else %}pending{% endif %}
+    ">
+        Status: {{ booking.status }}
+    </div>
+
+    <p><b>Seat:</b> {{ booking.seat }}</p>
+    <p><b>Route:</b> {{ booking.from }} → {{ booking.to }}</p>
+    <p><b>Date:</b> {{ booking.date }}</p>
+    <p><b>Fare:</b> ₹ {{ booking.fare }}</p>
+
+    {% if booking.status == 'PAID' %}
+    <!-- ✅ TICKET DOWNLOAD ONLY FOR PAID -->
+    <div class="ticket">
+        <a href="/ticket?mobile={{ request.form.mobile }}&utr={{ request.form.utr }}">
+            ⬇ Download Ticket
+        </a>
+    </div>
+    {% endif %}
+{% endif %}
+
+{% if message %}
+<p style="color:red;text-align:center">{{ message }}</p>
+{% endif %}
+
+</div>
+
+</body>
+</html>
